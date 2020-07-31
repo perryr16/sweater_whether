@@ -13,6 +13,7 @@ describe "whether results" do
     expect(@weather.city).to eq('Denver')
     expect(@weather.state).to eq('CO')
     expect(@weather.country).to eq('United States')
+    expect(@weather.current).to eq('66')
     expect(@weather.high).to eq('66')
     expect(@weather.low).to eq('31')
     expect(@weather.date).to eq('April 12, 2020')
@@ -20,10 +21,11 @@ describe "whether results" do
     expect(@weather.summary).to eq('Partly Cloudy')
     expect(@weather.feels_like).to eq('54')
     expect(@weather.humidity).to eq('30%')
-    expect(@weather.visibility).to eq('20 miles')
-    expect(@weather.uv_index).to eq('2(low)')
-    expect(@weather.sunrise).to eq('6:23 AM')
-    expect(@weather.sunset).to eq('8:20 PM')
+    expect(@weather.visibility).to eq('20 miles') #???
+    #
+    expect(@weather.uv_index).to eq('2(low)') # UV index
+    expect(@weather.sunrise).to eq('6:23 AM') # hourly
+    expect(@weather.sunset).to eq('8:20 PM') # hourly
   end
   xit "returns hourly weather" do
 
@@ -102,40 +104,30 @@ describe "whether results" do
     
   xit "returns Daily weather forcast" do 
 
-    expect(@weather.daily.where(name: 'Sunday').summary).to eq('')
-    expect(@weather.daily.where(name: 'Sunday').precip).to eq('0')
-    expect(@weather.daily.where(name: 'Sunday').high).to eq('54')
-    expect(@weather.daily.where(name: 'Sunday').low).to eq('54')
+    expect(@weather.daily.where(name: 'Today').summary).to eq('')
+    expect(@weather.daily.where(name: 'Today').precip).to eq('0')
+    expect(@weather.daily.where(name: 'Today').high).to eq('54')
+    expect(@weather.daily.where(name: 'Today').low).to eq('54')
     #
-    expect(@weather.daily.where(name: 'Monday').summary).to eq('')
-    expect(@weather.daily.where(name: 'Monday').precip).to eq('0')
-    expect(@weather.daily.where(name: 'Monday').high).to eq('54')
-    expect(@weather.daily.where(name: 'Monday').low).to eq('54')
+    expect(@weather.daily.where(name: 'Tomorrow').summary).to eq('')
+    expect(@weather.daily.where(name: 'Tomorrow').precip).to eq('0')
+    expect(@weather.daily.where(name: 'Tomorrow').high).to eq('54')
+    expect(@weather.daily.where(name: 'Tomorrow').low).to eq('54')
     #
-    expect(@weather.daily.where(name: 'Tuesday').summary).to eq('')
-    expect(@weather.daily.where(name: 'Tuesday').precip).to eq('0')
-    expect(@weather.daily.where(name: 'Tuesday').high).to eq('54')
-    expect(@weather.daily.where(name: 'Tuesday').low).to eq('54')
+    expect(@weather.daily.where(name: 'Day 3').summary).to eq('')
+    expect(@weather.daily.where(name: 'Day 3').precip).to eq('0')
+    expect(@weather.daily.where(name: 'Day 3').high).to eq('54')
+    expect(@weather.daily.where(name: 'Day 3').low).to eq('54')
     #
-    expect(@weather.daily.where(name: 'Wednesday').summary).to eq('')
-    expect(@weather.daily.where(name: 'Wednesday').precip).to eq('0')
-    expect(@weather.daily.where(name: 'Wednesday').high).to eq('54')
-    expect(@weather.daily.where(name: 'Wednesday').low).to eq('54')
+    expect(@weather.daily.where(name: 'Day 4').summary).to eq('')
+    expect(@weather.daily.where(name: 'Day 4').precip).to eq('0')
+    expect(@weather.daily.where(name: 'Day 4').high).to eq('54')
+    expect(@weather.daily.where(name: 'Day 4').low).to eq('54')
     #
-    expect(@weather.daily.where(name: 'Thursday').summary).to eq('')
-    expect(@weather.daily.where(name: 'Thursday').precip).to eq('0')
-    expect(@weather.daily.where(name: 'Thursday').high).to eq('54')
-    expect(@weather.daily.where(name: 'Thursday').low).to eq('54')
-    #
-    expect(@weather.daily.where(name: 'Friday').summary).to eq('')
-    expect(@weather.daily.where(name: 'Friday').precip).to eq('0')
-    expect(@weather.daily.where(name: 'Friday').high).to eq('54')
-    expect(@weather.daily.where(name: 'Friday').low).to eq('54')
-    #
-    expect(@weather.daily.where(name: 'Saturday').summary).to eq('')
-    expect(@weather.daily.where(name: 'Saturday').precip).to eq('0')
-    expect(@weather.daily.where(name: 'Saturday').high).to eq('54')
-    expect(@weather.daily.where(name: 'Saturday').low).to eq('54')
+    expect(@weather.daily.where(name: 'Day 5').summary).to eq('')
+    expect(@weather.daily.where(name: 'Day 5').precip).to eq('0')
+    expect(@weather.daily.where(name: 'Day 5').high).to eq('54')
+    expect(@weather.daily.where(name: 'Day 5').low).to eq('54')
     #
   end  
   

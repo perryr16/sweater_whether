@@ -1,33 +1,4 @@
 class Weather < ApplicationRecord
-  has_one :am1
-  has_one :am2
-  has_one :am3
-  has_one :am4
-  has_one :am5
-  has_one :am6
-  has_one :am7
-  has_one :am8
-  has_one :am9
-  has_one :am10
-  has_one :am11
-  has_one :am12
-  has_one :pm1
-  has_one :pm2
-  has_one :pm3
-  has_one :pm4
-  has_one :pm5
-  has_one :pm6
-  has_one :pm7
-  has_one :pm8
-  has_one :pm9
-  has_one :pm10
-  has_one :pm11
-  has_one :pm12
-  has_one :sund
-  has_one :mon
-  has_one :tue
-  has_one :wed
-  has_one :thur
-  has_one :fri
-  has_one :sat
+  has_many :dailies
+  has_many :hourlies
 end

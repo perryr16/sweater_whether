@@ -1,6 +1,6 @@
 class MapService 
 
-  def get_long_lat(location)
+  def get_lat_lon(location)
     response = conn.get('/geocoding/v1/address') do |res|
       res.params[:location] = location
     end

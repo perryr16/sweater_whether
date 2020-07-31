@@ -4,10 +4,9 @@ describe "whether results" do
   before :each do 
     location = 'denver,co'
     weather_results = WeatherResults.new(location)
-    
-    weather = Weather.new
+    weather_results.create_weather_object
   end
-  xit "returns weather based on long/lat" do
+  it "returns weather based on long/lat" do
 
 
     expect(@weather.city).to eq('Denver')
@@ -29,105 +28,58 @@ describe "whether results" do
   end
   xit "returns hourly weather" do
 
-    expect(@weather.hourly.where(name: "1 AM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "1 AM").summary).to eq('sunny')
+    expect(@weather.hourly.where(index: 0).temp).to eq('54')
+    expect(@weather.hourly.where(index: 0).summary).to eq('sunny')
 
-    expect(@weather.hourly.where(name: "2 AM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "2 AM").summary).to eq('cloudy')
+    expect(@weather.hourly.where(index: 1).temp).to eq('54')
+    expect(@weather.hourly.where(index: 1).summary).to eq('cloudy')
 
-    expect(@weather.hourly.where(name: "3 AM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "3 AM").summary).to eq('sunny')
+    expect(@weather.hourly.where(index: 2).temp).to eq('54')
+    expect(@weather.hourly.where(index: 2).summary).to eq('sunny')
 
-    expect(@weather.hourly.where(name: "4 AM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "4 AM").summary).to eq('sunny')
+    expect(@weather.hourly.where(index: 3).temp).to eq('54')
+    expect(@weather.hourly.where(index: 3).summary).to eq('sunny')
 
-    expect(@weather.hourly.where(name: "5 AM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "5 AM").summary).to eq('sunny')
+    expect(@weather.hourly.where(index: 4).temp).to eq('54')
+    expect(@weather.hourly.where(index: 4).summary).to eq('sunny')
 
-    expect(@weather.hourly.where(name: "6 AM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "6 AM").summary).to eq('sunny')
+    expect(@weather.hourly.where(index: 5).temp).to eq('54')
+    expect(@weather.hourly.where(index: 5).summary).to eq('sunny')
 
-    expect(@weather.hourly.where(name: "7 AM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "7 AM").summary).to eq('sunny')
+    expect(@weather.hourly.where(index: 6).temp).to eq('54')
+    expect(@weather.hourly.where(index: 6).summary).to eq('sunny')
 
-    expect(@weather.hourly.where(name: "8 AM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "8 AM").summary).to eq('sunny')
+    expect(@weather.hourly.where(index: 7).temp).to eq('54')
+    expect(@weather.hourly.where(index: 7).summary).to eq('sunny')
 
-    expect(@weather.hourly.where(name: "9 AM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "9 AM").summary).to eq('sunny')
-
-    expect(@weather.hourly.where(name: "10 AM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "10 AM").summary).to eq('sunny')
-
-    expect(@weather.hourly.where(name: "11 AM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "11 AM").summary).to eq('sunny')
-
-    expect(@weather.hourly.where(name: "12 AM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "12 AM").summary).to eq('sunny')
-
-    expect(@weather.hourly.where(name: "1 PM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "1 PM").summary).to eq('54')
-
-    expect(@weather.hourly.where(name: "2 PM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "2 PM").summary).to eq('54')
-
-    expect(@weather.hourly.where(name: "3 PM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "3 PM").summary).to eq('54')
-
-    expect(@weather.hourly.where(name: "4 PM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "4 PM").summary).to eq('54')
-
-    expect(@weather.hourly.where(name: "5 PM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "5 PM").summary).to eq('54')
-
-    expect(@weather.hourly.where(name: "6 PM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "6 PM").summary).to eq('54')
-
-    expect(@weather.hourly.where(name: "7 PM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "7 PM").summary).to eq('54')
-
-    expect(@weather.hourly.where(name: "8 PM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "8 PM").summary).to eq('54')
-
-    expect(@weather.hourly.where(name: "9 PM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "9 PM").summary).to eq('54')
-
-    expect(@weather.hourly.where(name: "10 PM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "10 PM").summary).to eq('54')
-
-    expect(@weather.hourly.where(name: "11 PM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "11 PM").summary).to eq('54')
-
-    expect(@weather.hourly.where(name: "12 PM").temp).to eq('54')
-    expect(@weather.hourly.where(name: "12 PM").summary).to eq('54')
   end
     
   xit "returns Daily weather forcast" do 
 
-    expect(@weather.daily.where(name: 'Today').summary).to eq('')
-    expect(@weather.daily.where(name: 'Today').precip).to eq('0')
-    expect(@weather.daily.where(name: 'Today').high).to eq('54')
-    expect(@weather.daily.where(name: 'Today').low).to eq('54')
+    expect(@weather.daily.where(index: 0).summary).to eq('')
+    expect(@weather.daily.where(index: 0).precip).to eq('0')
+    expect(@weather.daily.where(index: 0).high).to eq('54')
+    expect(@weather.daily.where(index: 0).low).to eq('54')
     #
-    expect(@weather.daily.where(name: 'Tomorrow').summary).to eq('')
-    expect(@weather.daily.where(name: 'Tomorrow').precip).to eq('0')
-    expect(@weather.daily.where(name: 'Tomorrow').high).to eq('54')
-    expect(@weather.daily.where(name: 'Tomorrow').low).to eq('54')
+    expect(@weather.daily.where(index: 1).summary).to eq('')
+    expect(@weather.daily.where(index: 1).precip).to eq('0')
+    expect(@weather.daily.where(index: 1).high).to eq('54')
+    expect(@weather.daily.where(index: 1).low).to eq('54')
     #
-    expect(@weather.daily.where(name: 'Day 3').summary).to eq('')
-    expect(@weather.daily.where(name: 'Day 3').precip).to eq('0')
-    expect(@weather.daily.where(name: 'Day 3').high).to eq('54')
-    expect(@weather.daily.where(name: 'Day 3').low).to eq('54')
+    expect(@weather.daily.where(index: 2).summary).to eq('')
+    expect(@weather.daily.where(index: 2).precip).to eq('0')
+    expect(@weather.daily.where(index: 2).high).to eq('54')
+    expect(@weather.daily.where(index: 2).low).to eq('54')
     #
-    expect(@weather.daily.where(name: 'Day 4').summary).to eq('')
-    expect(@weather.daily.where(name: 'Day 4').precip).to eq('0')
-    expect(@weather.daily.where(name: 'Day 4').high).to eq('54')
-    expect(@weather.daily.where(name: 'Day 4').low).to eq('54')
+    expect(@weather.daily.where(index: 3).summary).to eq('')
+    expect(@weather.daily.where(index: 3).precip).to eq('0')
+    expect(@weather.daily.where(index: 3).high).to eq('53')
+    expect(@weather.daily.where(index: 3).low).to eq('54')
     #
-    expect(@weather.daily.where(name: 'Day 5').summary).to eq('')
-    expect(@weather.daily.where(name: 'Day 5').precip).to eq('0')
-    expect(@weather.daily.where(name: 'Day 5').high).to eq('54')
-    expect(@weather.daily.where(name: 'Day 5').low).to eq('54')
+    expect(@weather.daily.where(index: 4).summary).to eq('')
+    expect(@weather.daily.where(index: 4).precip).to eq('0')
+    expect(@weather.daily.where(index: 4).high).to eq('54')
+    expect(@weather.daily.where(index: 4).low).to eq('54')
     #
   end  
   

@@ -10,10 +10,6 @@ class WeatherResults
     @map_data[:results][0][:locations][0][:latLng]
   end
 
-  def weather_data 
-    weather_service.get_weather(lat_lon[:lat], lat_lon[:lng])
-  end
-
   def create_weather_object
     weather = Weather.create(new_weather_params)
     create_hourlies(weather)
@@ -30,6 +26,31 @@ class WeatherResults
   def create_dailies(weather)
     5.times do |index|
       weather.dailies.create(new_daily_params(index))
+    end
+  end
+
+  def format_uvi(uvi)
+    case uvi 
+    when 0..2
+      "#{uvi} (low)"
+    when 3..5
+      "#{uvi} (moderate)"
+    when 6..7
+      "#{uvi} (high)"
+    when 8..10 
+      "#{uvi} (very high)"
+    when 11..99
+      "#{uvi} (extreme)"
+    else 
+      "n/a"
+    end
+  end
+
+  def format_country(abbrev)
+    if abbrev == 'US'
+      'United States'
+    else
+      abbrev 
     end
   end
 
@@ -98,31 +119,8 @@ class WeatherResults
     Time.at(ux_time).strftime("%A")
   end
 
-  def format_country(abbrev)
-    if abbrev == 'US'
-      'United States'
-    else
-      abbrev 
-    end
-  end
-
   def meter_to_mile(meters)
     ((meters.to_i / 1609.34).to_i).to_s + " miles"
   end
 
-  def format_uvi(uvi)
-    case uvi 
-    when 0..2
-      "#{uvi} (low)"
-    when 3..5
-      "#{uvi} (moderate)"
-    when 6..7
-      "#{uvi} (high)"
-    when 8..10 
-      "#{uvi} (very high)"
-    when 11..99
-      "#{uvi} (extreme)"
-    end
-  end
-  
 end

@@ -3,8 +3,8 @@ require 'rails_helper'
 describe "whether results" do
   before :each do 
     location = 'denver,co'
-    weather_results = WeatherResults.new(location)
-    weather_results.create_weather_object
+    @weather_results = WeatherResults.new(location)
+    @weather_results.create_weather_object
     @weather = Weather.last
   end
   it "returns weather based on long/lat" do
@@ -66,5 +66,27 @@ describe "whether results" do
     end
     
   end  
+
+  it "test format_uvi method" do
+    expect(@weather_results.format_uvi(0)).to eq('0 (low)')
+    expect(@weather_results.format_uvi(3)).to eq('3 (moderate)')
+    expect(@weather_results.format_uvi(5)).to eq('5 (moderate)')
+    expect(@weather_results.format_uvi(05)).to eq('5 (moderate)')
+    expect(@weather_results.format_uvi(7)).to eq('7 (high)')
+    expect(@weather_results.format_uvi(7)).to eq('7 (high)')
+    expect(@weather_results.format_uvi(8)).to eq('8 (very high)')
+    expect(@weather_results.format_uvi(11)).to eq('11 (extreme)')
+    expect(@weather_results.format_uvi(90)).to eq('90 (extreme)')
+    expect(@weather_results.format_uvi(100)).to eq('n/a')
+    expect(@weather_results.format_uvi(-5)).to eq('n/a')
+    expect(@weather_results.format_uvi('dog')).to eq('n/a')
+  end
+
+  it "test country" do
+    expect(@weather_results.format_country("England")).to eq('England')
+    expect(@weather_results.format_country("US")).to eq('United States')
+  end
+  
+  
   
 end

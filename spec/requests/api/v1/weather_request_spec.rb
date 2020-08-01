@@ -49,33 +49,22 @@ describe "whether results" do
 
   end
     
-  xit "returns Daily weather forcast" do 
+  it "returns Daily weather forcast" do 
 
-    expect(@weather.daily.where(index: 0).summary).to eq('')
-    expect(@weather.daily.where(index: 0).precip).to eq('0')
-    expect(@weather.daily.where(index: 0).high).to eq('54')
-    expect(@weather.daily.where(index: 0).low).to eq('54')
-    #
-    expect(@weather.daily.where(index: 1).summary).to eq('')
-    expect(@weather.daily.where(index: 1).precip).to eq('0')
-    expect(@weather.daily.where(index: 1).high).to eq('54')
-    expect(@weather.daily.where(index: 1).low).to eq('54')
-    #
-    expect(@weather.daily.where(index: 2).summary).to eq('')
-    expect(@weather.daily.where(index: 2).precip).to eq('0')
-    expect(@weather.daily.where(index: 2).high).to eq('54')
-    expect(@weather.daily.where(index: 2).low).to eq('54')
-    #
-    expect(@weather.daily.where(index: 3).summary).to eq('')
-    expect(@weather.daily.where(index: 3).precip).to eq('0')
-    expect(@weather.daily.where(index: 3).high).to eq('53')
-    expect(@weather.daily.where(index: 3).low).to eq('54')
-    #
-    expect(@weather.daily.where(index: 4).summary).to eq('')
-    expect(@weather.daily.where(index: 4).precip).to eq('0')
-    expect(@weather.daily.where(index: 4).high).to eq('54')
-    expect(@weather.daily.where(index: 4).low).to eq('54')
-    #
+    expect(@weather.dailies.length).to eq(5)
+
+    days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    
+    @weather.dailies.each_with_index do |daily, index|
+      expect(days_of_week.include?(daily.name)).to be true
+      expect(daily.summary.present?).to be true
+      expect(daily.precip.include?('mm')).to be true
+      expect(daily.precip[0].to_i).to_not eq(0) unless daily.precip[0] = '0'
+      expect(daily.high.to_i).to_not eq(0) unless daily.precip[0] = '0'
+      expect(daily.low.to_i).to_not eq(0) unless daily.precip[0] = '0'
+      expect(daily.index).to eq(index)
+    end
+    
   end  
   
 end

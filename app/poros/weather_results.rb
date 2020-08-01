@@ -82,13 +82,13 @@ class WeatherResults
   end
 
   def format_hr(ux_time)
-    time = Time.at(ux_time).strftime("%H %p")
+    time = Time.at(ux_time).strftime("%I %p")
     time.slice!(0) if time[0] == '0'
     time
   end
 
   def format_hr_min(ux_time)
-    time = Time.at(ux_time).strftime("%H:%M %p")
+    time = Time.at(ux_time).strftime("%I:%M %p")
     time.slice!(0) if time[0] == '0'
     time
   end

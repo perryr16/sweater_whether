@@ -25,7 +25,7 @@ describe "whether results" do
 
     exp_uv_ratings = ['low', 'moderate', 'high', 'very high', 'extreme']
     act_uv_rating = @weather.uv_index.split('(')[1][0..-2]
-    
+
     expect(exp_uv_ratings.include?(act_uv_rating)).to be true 
     expect(([@weather.sunrise[-2..-1]] & ['AM', 'PM']).present?).to be true
     expect(@weather.sunrise.include?(':')).to be true
@@ -34,31 +34,18 @@ describe "whether results" do
     expect(@weather.sunset.include?(':')).to be true
     expect(@weather.sunset[0].to_i).to_not eq(0)
   end
-  xit "returns hourly weather" do
 
-    expect(@weather.hourly.where(index: 0).temp).to eq('54')
-    expect(@weather.hourly.where(index: 0).summary).to eq('sunny')
+  it "returns hourly weather" do
 
-    expect(@weather.hourly.where(index: 1).temp).to eq('54')
-    expect(@weather.hourly.where(index: 1).summary).to eq('cloudy')
-
-    expect(@weather.hourly.where(index: 2).temp).to eq('54')
-    expect(@weather.hourly.where(index: 2).summary).to eq('sunny')
-
-    expect(@weather.hourly.where(index: 3).temp).to eq('54')
-    expect(@weather.hourly.where(index: 3).summary).to eq('sunny')
-
-    expect(@weather.hourly.where(index: 4).temp).to eq('54')
-    expect(@weather.hourly.where(index: 4).summary).to eq('sunny')
-
-    expect(@weather.hourly.where(index: 5).temp).to eq('54')
-    expect(@weather.hourly.where(index: 5).summary).to eq('sunny')
-
-    expect(@weather.hourly.where(index: 6).temp).to eq('54')
-    expect(@weather.hourly.where(index: 6).summary).to eq('sunny')
-
-    expect(@weather.hourly.where(index: 7).temp).to eq('54')
-    expect(@weather.hourly.where(index: 7).summary).to eq('sunny')
+    expect(@weather.hourlies.length).to eq(8)
+    
+    @weather.hourlies.each_with_index do |hourly, index|
+      expect(([hourly.name[-2..-1]] & ['AM', 'PM']).present?).to be true
+      expect(hourly.name[0].to_i).to_not eq(0)
+      expect(hourly.summary.present?).to be true 
+      expect(hourly.temp.to_i).to_not eq(0) unless hourly.temp == '0' 
+      expect(hourly.index).to eq(index)
+    end
 
   end
     

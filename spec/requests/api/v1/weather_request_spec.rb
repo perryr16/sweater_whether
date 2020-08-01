@@ -1,70 +1,51 @@
 require 'rails_helper'
 
-describe "whether results" do
-  before :each do 
-    location = 'denver,co'
-    weather_results = WeatherResults.new(location)
-    weather_results.create_weather_object
-    @weather = Weather.last
-  end
-  it "returns weather based on long/lat" do
+describe "Weather API" do 
 
-    expect(@weather.city).to eq('Denver')
-    expect(@weather.state).to eq('CO')
-    expect(@weather.country).to eq('United States')
-    expect(@weather.temp.to_i).to_not eq(0) unless @weather.temp = '0'
-    expect(@weather.high.to_i).to_not eq(0) unless @weather.high = '0'
-    expect(@weather.low.to_i).to_not eq(0) unless @weather.low = '0'
-    expect(@weather.feels_like.to_i).to_not eq(0) unless @weather.feels_like = '0'
-    expect(@weather.date.include?(":")).to be true
-    expect(@weather.summary.present?).to be true
-    expect(@weather.humidity[0..-2].to_i).to_not eq(0)
-    expect(@weather.humidity.include?("%")).to be
-    expect(@weather.visibility[0..-7].to_i).to_not eq(0)
-    expect(@weather.visibility.include?('miles')).to be true
+  it "sends weather info for a location" do 
+    get '/api/v1/forcast?location=denver,co'
 
-    exp_uv_ratings = ['low', 'moderate', 'high', 'very high', 'extreme']
-    act_uv_rating = @weather.uv_index.split('(')[1][0..-2]
+    expect(response.status).to eq(200)
 
-    expect(exp_uv_ratings.include?(act_uv_rating)).to be true 
-    expect(([@weather.sunrise[-2..-1]] & ['AM', 'PM']).present?).to be true
-    expect(@weather.sunrise.include?(':')).to be true
-    expect(@weather.sunrise[0].to_i).to_not eq(0)
-    expect(([@weather.sunset[-2..-1]] & ['AM', 'PM']).present?).to be true
-    expect(@weather.sunset.include?(':')).to be true
-    expect(@weather.sunset[0].to_i).to_not eq(0)
-  end
+    body = JSON.parse(response.body, symbolize_names: true)
 
-  it "returns hourly weather" do
+    expect(body.keys).to eq([:forcast, :hourly, :daily])
 
-    expect(@weather.hourlies.length).to eq(8)
-    
-    @weather.hourlies.each_with_index do |hourly, index|
-      expect(([hourly.name[-2..-1]] & ['AM', 'PM']).present?).to be true
-      expect(hourly.name[0].to_i).to_not eq(0)
-      expect(hourly.summary.present?).to be true 
-      expect(hourly.temp.to_i).to_not eq(0) unless hourly.temp == '0' 
-      expect(hourly.index).to eq(index)
+    exp_keys = [:id, :city, :state, :country, :high, :low, :date, :summary, :feels_like, :humidity, :visibility, :uv_index, :sunrise, :sunset, :created_at, :updated_at, :temp]
+    expect(body[:forcast].keys).to eq(exp_keys)
+    body[:forcast].each do |key, value|
+      expect(value.present?).to be true
+    end
+
+    exp_keys = [:id, :weather_id, :name, :summary, :temp, :index]
+    expect(body[:hourly].length).to eq(8)
+    body[:hourly].each do |hour|
+      expect(hour.keys).to eq(exp_keys)
+      hour.each do |key, value|
+        expect(value.present?).to be true 
+      end
+    end
+
+    exp_keys = [:id, :weather_id, :name, :summary, :precip, :high, :low, :index]
+    expect(body[:daily].length).to eq(5)
+    body[:daily].each do |hour|
+      expect(hour.keys).to eq(exp_keys)
+      hour.each do |key, value|
+        expect(value.present?).to be true 
+      end
     end
 
   end
-    
-  it "returns Daily weather forcast" do 
 
-    expect(@weather.dailies.length).to eq(5)
+  it "no location given" do
+    get '/api/v1/forcast'
 
-    days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-    
-    @weather.dailies.each_with_index do |daily, index|
-      expect(days_of_week.include?(daily.name)).to be true
-      expect(daily.summary.present?).to be true
-      expect(daily.precip.include?('mm')).to be true
-      expect(daily.precip[0].to_i).to_not eq(0) unless daily.precip[0] = '0'
-      expect(daily.high.to_i).to_not eq(0) unless daily.precip[0] = '0'
-      expect(daily.low.to_i).to_not eq(0) unless daily.precip[0] = '0'
-      expect(daily.index).to eq(index)
-    end
-    
-  end  
+    expect(response.status).to eq(200)
+
+    body = JSON.parse(response.body, symbolize_names: true)
+
+    expect(body[:message]).to eq("Enter a location. api/v1/forcast?location=<city,state>")
+  end
+  
   
 end

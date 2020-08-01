@@ -5,7 +5,7 @@ describe "Weather service" do
   it "returns wather today from lat lon" do
     service = WeatherService.new
     lat = 39.738453
-    lon = -104.984853
+    lon = -104.984853 
     body = service.get_weather(lat, lon)
     #current
     expect(body[:current][:temp].is_a?(Numeric)).to be true

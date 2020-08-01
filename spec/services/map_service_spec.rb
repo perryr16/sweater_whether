@@ -5,7 +5,7 @@ describe "Map service" do
   it "returns data from location" do
     service = MapService.new
     location = 'denver,co'
-    body = service.get_long_lat(location)
+    body = service.get_lat_lon(location)
 
     expect(body.keys[0].is_a?(Symbol)).to be true
     lat = body[:results][0][:locations][0][:latLng][:lat]

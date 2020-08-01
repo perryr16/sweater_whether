@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_31_163734) do
+ActiveRecord::Schema.define(version: 2020_08_01_170507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2020_07_31_163734) do
     t.string "temp"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "Index"
+    t.integer "index"
     t.index ["weather_id"], name: "index_hourlies_on_weather_id"
   end
 
@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(version: 2020_07_31_163734) do
     t.string "high"
     t.string "low"
     t.string "date"
-    t.string "time"
     t.string "summary"
     t.string "feels_like"
     t.string "humidity"
@@ -56,6 +55,7 @@ ActiveRecord::Schema.define(version: 2020_07_31_163734) do
     t.string "sunset"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "temp"
   end
 
   add_foreign_key "dailies", "weathers"

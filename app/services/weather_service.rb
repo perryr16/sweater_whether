@@ -5,6 +5,7 @@ class WeatherService
       res.params[:lat] = lat
       res.params[:lon] = lon
       res.params[:exclude] = 'minutely'
+      res.params[:units] = 'imperial'
     end
     json_parse(response)
   end
@@ -23,5 +24,7 @@ class WeatherService
   def json_parse(response)
     JSON.parse(response.body, symbolize_names: true)
   end
+
+
 
 end

@@ -36,5 +36,16 @@ describe "Weather API" do
     end
 
   end
+
+  it "no location given" do
+    get '/api/v1/forcast'
+
+    expect(response.status).to eq(200)
+
+    body = JSON.parse(response.body, symbolize_names: true)
+
+    expect(body[:message]).to eq("Enter a location. api/v1/forcast?location=<city,state>")
+  end
+  
   
 end

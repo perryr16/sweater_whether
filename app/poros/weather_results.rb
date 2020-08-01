@@ -18,6 +18,7 @@ class WeatherResults
     weather = Weather.create(new_weather_params)
     create_hourlies(weather)
     create_dailies(weather)
+    weather
   end
 
   def create_hourlies(weather)
@@ -75,7 +76,7 @@ class WeatherResults
   end
 
   def format_datetime
-    date = Time.at(@weather_data[:current][:dt]).strftime("%H:%M %p, %B %d")
+    date = Time.at(@weather_data[:current][:dt]).strftime("%I:%M %p, %B %d")
     date.slice!(0) if date[0] == '0'
     date.slice!(-2) if date[-2] == '0'
     date

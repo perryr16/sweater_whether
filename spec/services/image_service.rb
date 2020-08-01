@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe "Image service" do 
 
-  it "returns image from location" do
+  xit "returns image from location" do
     service = ImageService.new
     location = 'denver,co'
     body = service.get_image(location)

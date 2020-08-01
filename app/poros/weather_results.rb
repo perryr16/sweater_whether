@@ -119,7 +119,7 @@ class WeatherResults
       "#{uvi} (high)"
     when 8..10 
       "#{uvi} (very high)"
-    else 11..99
+    when 11..99
       "#{uvi} (extreme)"
     end
   end

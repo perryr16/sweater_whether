@@ -5,26 +5,34 @@ describe "whether results" do
     location = 'denver,co'
     weather_results = WeatherResults.new(location)
     weather_results.create_weather_object
+    @weather = Weather.last
   end
   it "returns weather based on long/lat" do
-
 
     expect(@weather.city).to eq('Denver')
     expect(@weather.state).to eq('CO')
     expect(@weather.country).to eq('United States')
-    expect(@weather.current.to_i).to_not eq(0)
+    expect(@weather.temp.to_i).to_not eq(0)
     expect(@weather.high.to_i).to_not eq(0)
     expect(@weather.low.to_i).to_not eq(0)
     expect(@weather.feels_like.to_i).to_not eq(0)
-    expect(@weather.date).to eq('April 12, 2020')
-    expect(@weather.time).to eq('3:22 PM')
-    expect(@weather.summary).to eq('Partly Cloudy')
-    expect(@weather.humidity).to eq('30%')
-    expect(@weather.visibility).to eq('20 miles') #???
-    #
-    expect(@weather.uv_index).to eq('2(low)') # UV index
-    expect(@weather.sunrise).to eq('6:23 AM') # hourly
-    expect(@weather.sunset).to eq('8:20 PM') # hourly
+    expect(@weather.date.include?(":")).to be true
+    expect(@weather.summary.present?).to be true
+    expect(@weather.humidity[0..-2].to_i).to_not eq(0)
+    expect(@weather.humidity.include?("%")).to be
+    expect(@weather.visibility[0..-7].to_i).to_not eq(0)
+    expect(@weather.visibility.include?('miles')).to be true
+
+    exp_uv_ratings = ['low', 'moderate', 'high', 'very high', 'extreme']
+    act_uv_rating = @weather.uv_index.split('(')[1][0..-2]
+    
+    expect(exp_uv_ratings.include?(act_uv_rating)).to be true 
+    expect(([@weather.sunrise[-2..-1]] & ['AM', 'PM']).present?).to be true
+    expect(@weather.sunrise.include?(':')).to be true
+    expect(@weather.sunrise[0].to_i).to_not eq(0)
+    expect(([@weather.sunset[-2..-1]] & ['AM', 'PM']).present?).to be true
+    expect(@weather.sunset.include?(':')).to be true
+    expect(@weather.sunset[0].to_i).to_not eq(0)
   end
   xit "returns hourly weather" do
 

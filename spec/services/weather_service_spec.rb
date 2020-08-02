@@ -50,10 +50,10 @@ describe "Weather service" do
     lat = 39.738453
     lon = -104.984853
     body = service.get_weather(lat, lon)
-
+    
     5.times do |index|
       expect(body[:daily][index][:dt].is_a?(Numeric)).to be true
-      expect(body[:daily][index][:rain].is_a?(Numeric)).to be true
+      expect(body[:daily][index][:rain].is_a?(Numeric)).to be true if body[:daily][index][:rain]
       expect(body[:daily][index][:temp][:max].is_a?(Numeric)).to be true
       expect(body[:daily][index][:temp][:min].is_a?(Numeric)).to be true
       expect(body[:daily][index][:weather][0][:main].class).to be String

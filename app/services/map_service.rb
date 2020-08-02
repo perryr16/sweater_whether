@@ -7,6 +7,14 @@ class MapService
     JSON.parse(response.body, symbolize_names: true)
   end
 
+  def get_directions(to, from)
+    response = conn.get('/directions/v2/route') do |res|
+      res.params[:to] = to
+      res.params[:from] = from
+    end
+    JSON.parse(response.body, symbolize_names: true)
+  end
+
   private 
 
   def conn 

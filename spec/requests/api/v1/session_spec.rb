@@ -36,7 +36,7 @@ describe "Login API" do
     }
     post '/api/v1/sessions', params: user_params
 
-    expect(response.status).to eq(409)
+    expect(response.status).to eq(400)
 
     body = JSON.parse(response.body, symbolize_names: true)
 
@@ -51,7 +51,7 @@ describe "Login API" do
     }
     post '/api/v1/sessions', params: user_params
 
-    expect(response.status).to eq(409)
+    expect(response.status).to eq(400)
 
     body = JSON.parse(response.body, symbolize_names: true)
 

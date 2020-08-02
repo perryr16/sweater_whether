@@ -49,11 +49,11 @@ describe "Road Trip API" do
     }
     post '/api/v1/road_trip', params: trip_params
 
-    expect(response.status).to eq(409)
+    expect(response.status).to eq(400)
 
     body = JSON.parse(response.body, symbolize_names: true)
     expect(body[:message]).to eq('Unable to Find Route')
-    expect(response.status).to eq(409)
+    expect(response.status).to eq(400)
   end
 
   it "user is missing info" do
@@ -64,11 +64,11 @@ describe "Road Trip API" do
     }
     post '/api/v1/road_trip', params: trip_params
 
-    expect(response.status).to eq(409)
+    expect(response.status).to eq(400)
 
     body = JSON.parse(response.body, symbolize_names: true)
     expect(body[:message]).to eq('Please Enter a destination')
-    expect(response.status).to eq(409)
+    expect(response.status).to eq(400)
 
     trip_params = {
     "origin": "",
@@ -77,11 +77,11 @@ describe "Road Trip API" do
     }
     post '/api/v1/road_trip', params: trip_params
 
-    expect(response.status).to eq(409)
+    expect(response.status).to eq(400)
 
     body = JSON.parse(response.body, symbolize_names: true)
     expect(body[:message]).to eq('Please Enter a origin, api_key')
-    expect(response.status).to eq(409)
+    expect(response.status).to eq(400)
     
   end
 

@@ -28,7 +28,7 @@ describe "Register API" do
     }
     post '/api/v1/users', params: user_params
 
-    expect(response.status).to eq(409)
+    expect(response.status).to eq(400)
 
     body = JSON.parse(response.body, symbolize_names: true)
 
@@ -43,7 +43,7 @@ describe "Register API" do
     }
     post '/api/v1/users', params: user_params
 
-    expect(response.status).to eq(409)
+    expect(response.status).to eq(400)
 
     body = JSON.parse(response.body, symbolize_names: true)
 
@@ -56,7 +56,7 @@ describe "Register API" do
     }
     post '/api/v1/users', params: user_params
 
-    expect(response.status).to eq(409)
+    expect(response.status).to eq(400)
 
     body = JSON.parse(response.body, symbolize_names: true)
 
@@ -77,7 +77,7 @@ describe "Register API" do
 
     post '/api/v1/users', params: user_params
 
-    expect(response.status).to eq(409)
+    expect(response.status).to eq(400)
 
     body = JSON.parse(response.body, symbolize_names: true)
 

@@ -11,11 +11,11 @@ class Api::V1::UsersController < ApplicationController
   def create
     user = User.create(new_user_params)
     if missing_params.present?
-      render json: {message: "Please Enter a #{missing_params}"}, status: :conflict
+      render json: {message: "Please Enter a #{missing_params}"}, status: :bad_request
     elsif password_mismatch?
-      render json: {message: "Passwords Did Not Match"}, status: :conflict
+      render json: {message: "Passwords Did Not Match"}, status: :bad_request
     elsif !user.save
-      render json: {message: "Email in Use"}, status: :conflict
+      render json: {message: "Email in Use"}, status: :bad_request
     else
       render json: UserSerializer.new(user), status: :created
     end

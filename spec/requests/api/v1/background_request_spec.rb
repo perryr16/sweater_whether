@@ -29,7 +29,7 @@ describe "Background API" do
   it "user missing params" do
     get '/api/v1/backgrounds'
 
-     expect(response.status).to eq(409)
+     expect(response.status).to eq(400)
 
     body = JSON.parse(response.body, symbolize_names: true)
 

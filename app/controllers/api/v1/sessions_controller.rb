@@ -6,7 +6,7 @@ class Api::V1::SessionsController < ApplicationController
       session[:user_id] = user.id
       render json: UserSerializer.new(user)
     else 
-      render json: {message: "Incorrect username of password"}, status: :conflict
+      render json: {message: "Incorrect username of password"}, status: :bad_request
     end
   end
 

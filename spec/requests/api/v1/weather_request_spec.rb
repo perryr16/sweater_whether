@@ -39,7 +39,7 @@ describe "Weather API" do
   it "no location given" do
     get '/api/v1/forecast'
 
-    expect(response.status).to eq(409)
+    expect(response.status).to eq(400)
 
     body = JSON.parse(response.body, symbolize_names: true)
 
@@ -49,7 +49,7 @@ describe "Weather API" do
   it "bad location given" do
     get '/api/v1/forecast?location='
 
-    expect(response.status).to eq(409)
+    expect(response.status).to eq(400)
 
     body = JSON.parse(response.body, symbolize_names: true)
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "Register API" do 
+describe "Login API" do 
   before :each do     
     user_params = {
       "email": "correct@example.com",

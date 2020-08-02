@@ -1,4 +1,4 @@
-class Forcast 
+class Forecast 
 
   def initialize(params)
     @location = params[:location]
@@ -10,7 +10,8 @@ class Forcast
 
   def format_response
     {
-      forcast: weather, 
+      
+      forecast: weather, 
       hourly: weather.hourlies, 
       daily: weather.dailies
     }

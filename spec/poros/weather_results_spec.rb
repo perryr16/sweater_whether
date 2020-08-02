@@ -51,7 +51,7 @@ describe "whether results" do
 
   end
     
-  it "returns Daily weather forcast" do 
+  it "returns Daily weather forecast" do 
 
     expect(@weather.dailies.length).to eq(5)
 

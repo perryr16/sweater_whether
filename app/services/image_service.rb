@@ -10,7 +10,7 @@ class ImageService
       res.params[:client_id] = ENV['UNSPLASH_KEY']
       res.params[:query] = keyword 
       res.params[:page] = 1
-      res.params[:per_page] = 1
+      res.params[:per_page] = 5
 
     end    
     JSON.parse(response.body, symbolize_names: true)

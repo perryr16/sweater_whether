@@ -10,8 +10,8 @@ class WeatherService
     json_parse(response)
   end
 
-  # convert time 
-  # Time.at(1595243443).strftime("%A %B, %d %Y")
+  # lat 39.738453
+  # lon -104.984853
 
   private 
 

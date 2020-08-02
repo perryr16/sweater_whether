@@ -24,9 +24,10 @@ describe "whether results" do
     expect(@weather.visibility.include?('miles')).to be true
 
     exp_uv_ratings = ['low', 'moderate', 'high', 'very high', 'extreme']
-    act_uv_rating = @weather.uv_index.split('(')[1][0..-2]
+    expect(@weather.uv_index).to eq('n/a') if @weather.uv_index == "n/a"
+    act_uv_rating = @weather.uv_index.split('(')[1][0..-2] if !@weather.uv_index == "n/a"
 
-    expect(exp_uv_ratings.include?(act_uv_rating)).to be true 
+    expect(exp_uv_ratings.include?(act_uv_rating)).to be true if !@weather.uv_index == "n/a"
     expect(([@weather.sunrise[-2..-1]] & ['AM', 'PM']).present?).to be true
     expect(@weather.sunrise.include?(':')).to be true
     expect(@weather.sunrise[0].to_i).to_not eq(0)

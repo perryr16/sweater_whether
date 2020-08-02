@@ -12,7 +12,8 @@ describe "Road Trip API" do
     "destination": "Pueblo,CO",
     "api_key": "3665f453ef5179ec0a4e1e37ea5ff648558648491b4cb2ce92af7f1b7c92"
     }
-    post '/api/v1/road_trip', params: trip_params
+
+    post '/api/v1/road_trip', params: trip_params #, headers: {'HTTP_ACCEPT' => "application/json"}
 
     expect(response.status).to eq(201)
 

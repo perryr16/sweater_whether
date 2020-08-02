@@ -1,8 +1,11 @@
 class Api::V1::ForcastController < ApplicationController 
 
   def index
-    forcast = Forcast.new(params)
-    render json: forcast.format_response
+    if !params[:location] || params[:location].empty?
+      render json: {message: "Enter a location. api/v1/forcast?location=<city,state>"}, status: :conflict
+    else
+      render json: Forcast.new(params).format_response
+    end
   end
   
 end

@@ -29,7 +29,7 @@ describe "Register API" do
     
   end
 
-  it "user logs in with incorrect info" do 
+  it "user logs in with incorrect email" do 
     user_params = {
       "email": "wrong@example.com",
       "password": "password"
@@ -44,7 +44,7 @@ describe "Register API" do
     
   end
 
-  it "user logs in with incorrect info" do 
+  it "user logs in with incorrect password" do 
     user_params = {
       "email": "correct@example.com",
       "password": "wrong"

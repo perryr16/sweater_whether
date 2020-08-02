@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_01_213839) do
+ActiveRecord::Schema.define(version: 2020_08_02_180522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,10 +19,12 @@ ActiveRecord::Schema.define(version: 2020_08_01_213839) do
     t.bigint "weather_id"
     t.string "name"
     t.string "summary"
-    t.string "precip"
-    t.string "high"
-    t.string "low"
     t.integer "index"
+    t.string "temp_units"
+    t.string "precip_units"
+    t.float "high"
+    t.float "low"
+    t.float "precip"
     t.index ["weather_id"], name: "index_dailies_on_weather_id"
   end
 
@@ -30,8 +32,9 @@ ActiveRecord::Schema.define(version: 2020_08_01_213839) do
     t.bigint "weather_id"
     t.string "name"
     t.string "summary"
-    t.string "temp"
     t.integer "index"
+    t.string "temp_units"
+    t.float "temp"
     t.index ["weather_id"], name: "index_hourlies_on_weather_id"
   end
 
@@ -47,19 +50,23 @@ ActiveRecord::Schema.define(version: 2020_08_01_213839) do
     t.string "city"
     t.string "state"
     t.string "country"
-    t.string "high"
-    t.string "low"
     t.string "date"
     t.string "summary"
-    t.string "feels_like"
-    t.string "humidity"
-    t.string "visibility"
-    t.string "uv_index"
     t.string "sunrise"
     t.string "sunset"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "temp"
+    t.string "temp_units"
+    t.string "visibility_units"
+    t.string "humidity_units"
+    t.string "uv_index_rating"
+    t.float "high"
+    t.float "low"
+    t.float "feels_like"
+    t.float "humidity"
+    t.float "visibility"
+    t.float "temp"
+    t.float "uv_index"
   end
 
   add_foreign_key "dailies", "weathers"

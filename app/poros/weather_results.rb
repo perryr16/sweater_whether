@@ -31,16 +31,16 @@ class WeatherResults
 
   def format_uvi(uvi)
     case uvi 
-    when 0..2
-      "#{uvi} (low)"
-    when 3..5
-      "#{uvi} (moderate)"
-    when 6..7
-      "#{uvi} (high)"
-    when 8..10 
-      "#{uvi} (very high)"
-    when 11..99
-      "#{uvi} (extreme)"
+    when 0..2.9
+      "low"
+    when 2.9..5.9
+      "moderate"
+    when 5.9..7.9
+      "high"
+    when 7.9..10.9
+      "very high"
+    when 10.9..99
+      "extreme"
     else 
       "n/a"
     end
@@ -59,20 +59,24 @@ class WeatherResults
 
   def new_weather_params 
     {
-      city:       @map_data[:results][0][:locations][0][:adminArea5],
-      state:      @map_data[:results][0][:locations][0][:adminArea3],
-      country:    format_country(@map_data[:results][0][:locations][0][:adminArea1]), 
-      temp:       @weather_data[:current][:temp].to_i,
-      high:       @weather_data[:daily][0][:temp][:max].to_i,
-      low:        @weather_data[:daily][0][:temp][:min].to_i,
-      feels_like: @weather_data[:current][:feels_like].to_i,
-      date:       format_datetime,
-      summary:    @weather_data[:current][:weather][0][:description],
-      humidity:   "#{@weather_data[:current][:humidity]}%",
-      visibility: meter_to_mile(@weather_data[:current][:visibility]),
-      uv_index:   format_uvi(@weather_data[:current][:uvi]),
-      sunrise:    format_hr_min(@weather_data[:current][:sunrise]),
-      sunset:     format_hr_min(@weather_data[:current][:sunset]),
+      city:               @map_data[:results][0][:locations][0][:adminArea5],
+      state:              @map_data[:results][0][:locations][0][:adminArea3],
+      country:            format_country(@map_data[:results][0][:locations][0][:adminArea1]), 
+      temp:               @weather_data[:current][:temp],
+      high:               @weather_data[:daily][0][:temp][:max],
+      low:                @weather_data[:daily][0][:temp][:min],
+      feels_like:         @weather_data[:current][:feels_like],
+      temp_units:         "F",
+      date:               format_datetime,
+      summary:            @weather_data[:current][:weather][0][:description],
+      humidity:           @weather_data[:current][:humidity],
+      humidity_units:     "%",
+      visibility:         meter_to_mile(@weather_data[:current][:visibility]),
+      visibility_units:   "miles",
+      uv_index:           @weather_data[:current][:uvi],
+      uv_index_rating:    format_uvi(@weather_data[:current][:uvi]),
+      sunrise:            format_hr_min(@weather_data[:current][:sunrise]),
+      sunset:             format_hr_min(@weather_data[:current][:sunset]),
     }
   end
 
@@ -80,8 +84,9 @@ class WeatherResults
     {
     name: format_hr(@weather_data[:hourly][index][:dt]),
     summary: @weather_data[:hourly][index][:weather][0][:main],
-    temp: @weather_data[:hourly][index][:temp].to_i,
-    index: index,
+    temp: @weather_data[:hourly][index][:temp],
+    temp_units: "F",
+    index: index
     }
   end
 
@@ -89,9 +94,11 @@ class WeatherResults
     {    
      name: format_day(@weather_data[:daily][index][:dt]),
      summary: @weather_data[:daily][index][:weather][0][:main],
-     precip: "#{@weather_data[:daily][index][:rain].to_i} mm",
-     high: @weather_data[:daily][index][:temp][:max].to_i,
-     low: @weather_data[:daily][index][:temp][:min].to_i,
+     precip: format_precip(@weather_data[:daily][index]),
+     precip_units: "mm",
+     high: @weather_data[:daily][index][:temp][:max],
+     low: @weather_data[:daily][index][:temp][:min],
+     temp_units: "F",
      index: index
     }
   end
@@ -120,7 +127,13 @@ class WeatherResults
   end
 
   def meter_to_mile(meters)
-    ((meters.to_i / 1609.34).to_i).to_s + " miles"
+    (meters.to_f / 1609.34).to_s
+  end
+
+  def format_precip(daily)
+    return daily[:rain] if daily[:rain]
+    return daily[:snow] if daily[:snow]
+    '0'
   end
 
 end

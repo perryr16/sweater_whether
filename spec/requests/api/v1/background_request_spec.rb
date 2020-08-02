@@ -67,7 +67,6 @@ describe "Background API" do
     expect(response.status).to eq(200)
 
     body = JSON.parse(response.body, symbolize_names: true)
-    binding.pry
 
     expect(body[:background1_url].include?('https://')).to be true
     expect(body[:background1_description].present?).to be true

@@ -11,11 +11,13 @@ describe "trail results" do
 
     location = Location.find_by(name: 'denver,co')
     expect(location.name).to eq('denver,co')
-    expect(location.forcast_summary.present?).to be true
-    expect(location.forcast_temp.present?).to be true
-    expect(location.forcast_temp.to_i).to_not eq(0) unless location.forcast_temp == '0'
+    expect(location.forecast_summary.present?).to be true
+    expect(location.forecast_temp.present?).to be true
+    expect(location.forecast_temp.to_i).to_not eq(0) unless location.forecast_temp == '0'
 
-    expect(location.trails.class).to be Array
+    expect(location.trails.length > 0).to be true
+    exp_difficulty = ['black', 'blue', 'green', 'blueBlack', 'doubleBlack', 'greenBlue']
+
     location.trails.each do |trail|
       expect(trail[:name].present?).to be true
       expect(trail[:summary].present?).to be true

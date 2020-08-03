@@ -37,8 +37,11 @@ class TrailResults
     end
   end
 
-  def distance_to_trail(to_lon, to_lat)
-    binding.pry
+  def distance_to_trail(to_lat, to_lon)
+    to_lat_lon = "#{to_lat},#{to_lon}"
+    from_lat_lon = "#{lat_lon[:lat]},#{lat_lon[:lng]}"
+    map_data = MapService.new.get_directions(to_lat_lon, from_lat_lon)
+    map_data[:route][:distance]
   end
   
 end

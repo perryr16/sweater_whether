@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_02_180522) do
+ActiveRecord::Schema.define(version: 2020_08_03_154353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,33 @@ ActiveRecord::Schema.define(version: 2020_08_02_180522) do
     t.string "temp_units"
     t.float "temp"
     t.index ["weather_id"], name: "index_hourlies_on_weather_id"
+  end
+
+  create_table "location_trails", force: :cascade do |t|
+    t.bigint "location_id"
+    t.bigint "trail_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_location_trails_on_location_id"
+    t.index ["trail_id"], name: "index_location_trails_on_trail_id"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "forecast_summary"
+    t.string "forecast_temp"
+  end
+
+  create_table "trails", force: :cascade do |t|
+    t.string "name"
+    t.string "summary"
+    t.string "difficulty"
+    t.string "location"
+    t.string "distance_to_trail"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -71,4 +98,6 @@ ActiveRecord::Schema.define(version: 2020_08_02_180522) do
 
   add_foreign_key "dailies", "weathers"
   add_foreign_key "hourlies", "weathers"
+  add_foreign_key "location_trails", "locations"
+  add_foreign_key "location_trails", "trails"
 end

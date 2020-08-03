@@ -34,5 +34,30 @@ describe "Trails API" do
       expect(trail[:distance_to_trail].to_i).to_not eq(0) unless trail[:distance_to_trail] == '0'
     end
   end
+
+  it "sad path: missing location params" do
+
+    get '/api/v1/trails'
+
+    expect(response.status).to eq(400)
+
+    body = JSON.parse(response.body, symbolize_names: true)
+
+    expect(body[:message]).to eq("No Location Found. api/v1/trails?location<city,state>")
+
+  end
+
+  it "sad path: missing location params" do
+
+    get '/api/v1/trails?location='
+
+    expect(response.status).to eq(400)
+
+    body = JSON.parse(response.body, symbolize_names: true)
+
+    expect(body[:message]).to eq("No Location Found. api/v1/trails?location<city,state>")
+
+  end
+  
   
 end

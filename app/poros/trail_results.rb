@@ -9,29 +9,6 @@ class TrailResults
     create_trails(location)
   end
 
-  def create_location
-    Location.create(name: @city_state,
-                    forecast_summary: weather_data[:current][:weather][0][:description],
-                    forecast_temp: weather_data[:current][:temp])
-  end
-
-  def create_trails(location)
-    trail_data.each do |trail|
-      location.trails.create(name: trail[:name],
-                            summary: trail[:summary],
-                            difficulty: trail[:difficulty],
-                            location: trail[:location],
-                            distance_to_trail: distance_to_trail(trail[:latitude], trail[:longitude]))
-    end
-  end
-
-  def distance_to_trail(to_lat, to_lon)
-    to_lat_lon = "#{to_lat},#{to_lon}"
-    from_lat_lon = "#{lat_lon[:lat]},#{lat_lon[:lng]}"
-    map_data = MapService.new.get_directions(to_lat_lon, from_lat_lon)
-    map_data[:route][:distance]
-  end
-
   def format_response
     create_trail_objects
     location = Location.find_by(name: @city_state)
@@ -54,7 +31,6 @@ class TrailResults
         }
       }
     }
-
   end
 
   private 
@@ -69,6 +45,29 @@ class TrailResults
 
   def trail_data
     TrailService.new.get_trails(lat_lon[:lat], lat_lon[:lng])[:trails]
+  end
+
+    def create_location
+    Location.create(name: @city_state,
+                    forecast_summary: weather_data[:current][:weather][0][:description],
+                    forecast_temp: weather_data[:current][:temp])
+  end
+
+  def create_trails(location)
+    trail_data.each do |trail|
+      location.trails.create(name: trail[:name],
+                            summary: trail[:summary],
+                            difficulty: trail[:difficulty],
+                            location: trail[:location],
+                            distance_to_trail: distance_to_trail(trail[:latitude], trail[:longitude]))
+    end
+  end
+
+  def distance_to_trail(to_lat, to_lon)
+    to_lat_lon = "#{to_lat},#{to_lon}"
+    from_lat_lon = "#{lat_lon[:lat]},#{lat_lon[:lng]}"
+    map_data = MapService.new.get_directions(to_lat_lon, from_lat_lon)
+    map_data[:route][:distance]
   end
 
 

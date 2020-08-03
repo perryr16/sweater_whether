@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe "Trails API" do 
 
-  it "trails path returns weather and trail data" do
+  it "Trails endpoint returns weather and trail data" do
 
     get '/api/v1/trails?location=denver,co'
 
@@ -37,7 +37,7 @@ describe "Trails API" do
     end
   end
 
-  it "sad path: missing params" do
+  it "Missing params" do
 
     get '/api/v1/trails'
 
@@ -49,7 +49,7 @@ describe "Trails API" do
 
   end
 
-  it "sad path: missing location paramater" do
+  it "Missing location paramater" do
 
     get '/api/v1/trails?location='
 
@@ -61,7 +61,7 @@ describe "Trails API" do
 
   end
 
-  it "sad path: unknown location returns no trails & fail gracefully" do
+  it "Unknown location returns no trails & fail gracefully" do
 
     get '/api/v1/trails?location=adf3asdf'
 

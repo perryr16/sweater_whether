@@ -13,5 +13,6 @@ describe "Weather service" do
     expect(body[:trails][0][:summary].present?).to be true
     expect(body[:trails][0][:difficulty].present?).to be true
     expect(body[:trails][0][:location].present?).to be true
+    expect(body[:trails][0][:not_a_value].present?).to be false
   end
 end

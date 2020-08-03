@@ -4,18 +4,6 @@ class TrailResults
     @city_state = city_state
   end
 
-  def lat_lon
-    MapService.new.get_lat_lon(@city_state)[:results][0][:locations][0][:latLng]
-  end
-
-  def weather_data
-    WeatherService.new.get_weather(lat_lon[:lat], lat_lon[:lng])
-  end
-
-  def trail_data
-    TrailService.new.get_trails(lat_lon[:lat], lat_lon[:lng])[:trails]
-  end
-
   def create_trail_objects
     location = create_location
     create_trails(location)
@@ -55,18 +43,34 @@ class TrailResults
           summary: location.forecast_summary,
           temperature: location.forecast_temp,
         },
-        trails: [
-          location.trails.each do |trail|
+        trails: 
+          location.trails.map do |trail|
             {name: trail.name,
             summary: trail.summary,
             difficulty: trail.difficulty,
             location: trail.location,
             distance_to_trail: trail.distance_to_trail}
           end
-        ]
-
-    }}}
+        }
+      }
+    }
 
   end
+
+  private 
+
+  def lat_lon
+    MapService.new.get_lat_lon(@city_state)[:results][0][:locations][0][:latLng]
+  end
+
+  def weather_data
+    WeatherService.new.get_weather(lat_lon[:lat], lat_lon[:lng])
+  end
+
+  def trail_data
+    TrailService.new.get_trails(lat_lon[:lat], lat_lon[:lng])[:trails]
+  end
+
+
   
 end

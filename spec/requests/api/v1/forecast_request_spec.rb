@@ -10,13 +10,13 @@ describe "Weather API" do
     body = JSON.parse(response.body, symbolize_names: true)
 
     expect(body.keys).to eq([:forecast, :hourly, :daily])
-    exp_keys = [:id, :city, :state, :country, :date, :summary, :sunrise, :sunset, :created_at, :updated_at, :temp_units, :visibility_units, :humidity_units, :uv_index_rating, :high, :low, :feels_like, :humidity, :visibility, :temp, :uv_index]
+    exp_keys = [:city, :state, :country, :temp, :high, :low, :feels_like, :temp_units, :date, :summary, :humidity, :humidity_units, :visibility, :visibility_units, :uv_index, :uv_index_rating, :sunrise, :sunset]
     expect(body[:forecast].keys).to eq(exp_keys)
     body[:forecast].each do |key, value|
       expect(value.present?).to be true
     end
 
-    exp_keys = [:id, :weather_id, :name, :summary, :index, :temp_units, :temp]
+    exp_keys = [:name, :summary, :temp, :temp_units, :index]
     expect(body[:hourly].length).to eq(8)
     body[:hourly].each do |hour|
       expect(hour.keys).to eq(exp_keys)
@@ -25,7 +25,7 @@ describe "Weather API" do
       end
     end
 
-    exp_keys = [:id, :weather_id, :name, :summary, :index, :temp_units, :precip_units, :high, :low, :precip]
+    exp_keys = [:name, :summary, :precip, :precip_units, :high, :low, :temp_units, :index]
     expect(body[:daily].length).to eq(5)
     body[:daily].each do |hour|
       expect(hour.keys).to eq(exp_keys)

@@ -1,4 +1,4 @@
-class WeatherResults 
+class ForecastResults 
 
   def initialize(location)
     @location = location
@@ -10,23 +10,12 @@ class WeatherResults
     @map_data[:results][0][:locations][0][:latLng]
   end
 
-  def create_weather_object
-    weather = Weather.create(new_weather_params)
-    create_hourlies(weather)
-    create_dailies(weather)
-    weather
-  end
-
-  def create_hourlies(weather)
-    8.times do |index|
-      weather.hourlies.create(new_hourly_params(index))
-    end
-  end
-
-  def create_dailies(weather)
-    5.times do |index|
-      weather.dailies.create(new_daily_params(index))
-    end
+  def format_response
+    {
+      forecast: forecast_response,
+      hourly: hourly_response,
+      daily: daily_response
+    }
   end
 
   def format_uvi(uvi)
@@ -54,10 +43,9 @@ class WeatherResults
     end
   end
 
-
   private
 
-  def new_weather_params 
+  def forecast_response
     {
       city:               @map_data[:results][0][:locations][0][:adminArea5],
       state:              @map_data[:results][0][:locations][0][:adminArea3],
@@ -80,27 +68,35 @@ class WeatherResults
     }
   end
 
-  def new_hourly_params(index)
-    {
-    name: format_hr(@weather_data[:hourly][index][:dt]),
-    summary: @weather_data[:hourly][index][:weather][0][:main],
-    temp: @weather_data[:hourly][index][:temp],
-    temp_units: "F",
-    index: index
-    }
+  def hourly_response
+    response = []
+      8.times do |index|
+       response << {
+        name: format_hr(@weather_data[:hourly][index][:dt]),
+        summary: @weather_data[:hourly][index][:weather][0][:main],
+        temp: @weather_data[:hourly][index][:temp],
+        temp_units: "F",
+        index: index
+        }
+    end
+    response
   end
 
-  def new_daily_params(index)
-    {    
-     name: format_day(@weather_data[:daily][index][:dt]),
-     summary: @weather_data[:daily][index][:weather][0][:main],
-     precip: format_precip(@weather_data[:daily][index]),
-     precip_units: "mm",
-     high: @weather_data[:daily][index][:temp][:max],
-     low: @weather_data[:daily][index][:temp][:min],
-     temp_units: "F",
-     index: index
-    }
+  def daily_response 
+    response = []
+    5.times do |index|
+      response << {    
+      name: format_day(@weather_data[:daily][index][:dt]),
+      summary: @weather_data[:daily][index][:weather][0][:main],
+      precip: format_precip(@weather_data[:daily][index]),
+      precip_units: "mm",
+      high: @weather_data[:daily][index][:temp][:max],
+      low: @weather_data[:daily][index][:temp][:min],
+      temp_units: "F",
+      index: index
+      }
+    end
+    response
   end
 
   def format_datetime

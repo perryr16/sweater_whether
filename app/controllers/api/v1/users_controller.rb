@@ -27,6 +27,7 @@ class Api::V1::UsersController < ApplicationController
     {
       email: params[:email],
       password: params[:password],
+      password_confirmation: params[:password],
       api_key: SecureRandom.hex(30)
     }
   end

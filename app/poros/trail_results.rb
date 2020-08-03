@@ -2,16 +2,18 @@ class TrailResults
 
   def initialize(city_state)
     @city_state = city_state
+    @location_id = nil
   end
 
   def create_trail_objects
     location = create_location
+    @location_id = location.id
     create_trails(location)
   end
 
   def format_response
     create_trail_objects
-    location = Location.find_by(name: @city_state)
+    location = Location.find(@location_id)
 
     {data: {
       attributes: {

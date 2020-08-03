@@ -19,6 +19,7 @@ describe "Trails API" do
     expect(forecast_data[:summary].present?).to be true
     expect(forecast_data[:temperature].present?).to be true
     expect(forecast_data[:temperature].to_i).to_not eq(0) unless forecast_data[:temperature == '0']
+    expect(forecast_data[:not_a_value].present?).to be false
     
     trail_data = body[:data][:attributes][:trails]
     exp_difficulty = ['black', 'blue', 'green', 'blueBlack', 'doubleBlack', 'greenBlue']
@@ -32,10 +33,11 @@ describe "Trails API" do
       expect(trail[:location].present?).to be true
       expect(trail[:distance_to_trail].present?).to be true
       expect(trail[:distance_to_trail].to_i).to_not eq(0) unless trail[:distance_to_trail] == '0'
+      expect(trail[:not_a_value].present?).to be false
     end
   end
 
-  it "sad path: missing location params" do
+  it "sad path: missing params" do
 
     get '/api/v1/trails'
 
@@ -47,7 +49,7 @@ describe "Trails API" do
 
   end
 
-  it "sad path: missing location params" do
+  it "sad path: missing location paramater" do
 
     get '/api/v1/trails?location='
 
@@ -57,6 +59,22 @@ describe "Trails API" do
 
     expect(body[:message]).to eq("No Location Found. api/v1/trails?location<city,state>")
 
+  end
+
+  it "sad path: unknown location returns no trails & fail gracefully" do
+
+    get '/api/v1/trails?location=adf3asdf'
+
+    expect(response.status).to eq(200)
+
+    body = JSON.parse(response.body, symbolize_names: true)
+
+    attributes = body[:data][:attributes]
+
+    expect(attributes[:location]).to eq('adf3asdf')
+    expect(attributes[:forecast][:summary].present?).to be true
+    expect(attributes[:forecast][:temperature].present?).to be true
+    expect(attributes[:trails].empty?).to be true
   end
   
   

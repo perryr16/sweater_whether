@@ -10,9 +10,6 @@ class WeatherService
     json_parse(response)
   end
 
-  # lat 39.738453
-  # lon -104.984853
-
   private 
 
   def conn 

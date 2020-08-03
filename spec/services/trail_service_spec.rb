@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe "Weather service" do 
+describe "Trail Service" do 
 
-  it "returns wather today from lat lon" do
+  it "returns trail info from lat lon" do
     service = TrailService.new
     lat = 39.738453
     lon = -104.984853 

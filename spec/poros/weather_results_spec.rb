@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "whether results" do
+xdescribe "whether results" do
   before :each do 
     location = 'denver,co'
     @weather_results = WeatherResults.new(location)

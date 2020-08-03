@@ -8,19 +8,19 @@ describe "Trails API" do
 
     expect(response.status).to eq(200)
 
-    body = JOSN.parse(response.body, symbolize_names: true)
+    body = JSON.parse(response.body, symbolize_names: true)
 
     expect(body[:data][:attributes].keys).to eq([:location, :forecast, :trails])
 
     location_data = body[:data][:attributes][:location]
     expect(location_data).to eq('denver,co')
 
-    forcast_data = body[:data][:attributes][:forcast]
-    expect(forcast_data[:summary].present?).to be true
-    expect(forcast_data[:temperature].present?).to be true
-    expect(forcast_data[:temperature].to_i).to_not eq(0) unless forcast_data[:temperature == '0']
+    forecast_data = body[:data][:attributes][:forecast]
+    expect(forecast_data[:summary].present?).to be true
+    expect(forecast_data[:temperature].present?).to be true
+    expect(forecast_data[:temperature].to_i).to_not eq(0) unless forecast_data[:temperature == '0']
     
-    trail_data = body[:data][:attribtues][:trails]
+    trail_data = body[:data][:attributes][:trails]
     exp_difficulty = ['black', 'blue', 'green', 'blueBlack', 'doubleBlack', 'greenBlue']
     expect(trail_data.class).to be Array 
 

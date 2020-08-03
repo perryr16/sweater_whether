@@ -43,5 +43,30 @@ class TrailResults
     map_data = MapService.new.get_directions(to_lat_lon, from_lat_lon)
     map_data[:route][:distance]
   end
+
+  def format_response
+    create_trail_objects
+    location = Location.find_by(name: @city_state)
+
+    {data: {
+      attributes: {
+        location: location.name,
+        forecast: {
+          summary: location.forecast_summary,
+          temperature: location.forecast_temp,
+        },
+        trails: [
+          location.trails.each do |trail|
+            {name: trail.name,
+            summary: trail.summary,
+            difficulty: trail.difficulty,
+            location: trail.location,
+            distance_to_trail: trail.distance_to_trail}
+          end
+        ]
+
+    }}}
+
+  end
   
 end

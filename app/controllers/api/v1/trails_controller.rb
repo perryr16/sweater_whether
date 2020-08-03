@@ -1,7 +1,7 @@
 class Api::V1::TrailsController < ApplicationController 
 
   def index 
-    binding.pry
+    render json: TrailResults.new(params[:location]).format_response
   end
   
 end

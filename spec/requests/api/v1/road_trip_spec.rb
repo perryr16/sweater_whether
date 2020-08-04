@@ -46,11 +46,14 @@ describe "Road Trip API" do
   end
 
   it "user enters invalid tip destination with good api" do
-    trip_params = {body:{
-    "origin": "Denver,CO",
-    "destination": "isdvn4t4grawg24",
-    "api_key": "3665f453ef5179ec0a4e1e37ea5ff648558648491b4cb2ce92af7f1b7c92"
-    }}
+    trip_params = {
+                    body:
+                          {
+                          "origin": "Denver,CO",
+                          "destination": "isdvn4t4grawg24",
+                          "api_key": "3665f453ef5179ec0a4e1e37ea5ff648558648491b4cb2ce92af7f1b7c92"
+                          }
+                  }
     post '/api/v1/road_trip', params: trip_params
 
     expect(response.status).to eq(400)
@@ -74,7 +77,8 @@ describe "Road Trip API" do
     expect(body[:message]).to eq('Please Enter a destination')
     expect(response.status).to eq(400)
 
-    trip_params = {body:{
+    trip_params = {body:
+        {
     "origin": "",
     "destination": "Pueblo,co",
     "api_key": ""

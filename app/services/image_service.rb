@@ -1,9 +1,5 @@
 class ImageService 
 
-  def conn 
-    Faraday.new('https://api.unsplash.com')
-  end
-
   def get_image(keyword)
     keyword = keyword.gsub(',','%20').gsub(' ','%20' )
     response = conn.get('/search/photos') do |res|
@@ -16,4 +12,10 @@ class ImageService
     JSON.parse(response.body, symbolize_names: true)
   end
   
+  private 
+
+  def conn 
+    Faraday.new('https://api.unsplash.com')
+  end
+
 end

@@ -7,11 +7,8 @@ class WeatherService
       res.params[:exclude] = 'minutely'
       res.params[:units] = 'imperial'
     end
-    json_parse(response)
+     JSON.parse(response.body, symbolize_names: true)
   end
-
-  # lat 39.738453
-  # lon -104.984853
 
   private 
 
@@ -20,11 +17,5 @@ class WeatherService
       res.params[:appid] = ENV['WEATHER_KEY']
     end
   end
-
-  def json_parse(response)
-    JSON.parse(response.body, symbolize_names: true)
-  end
-
-
 
 end

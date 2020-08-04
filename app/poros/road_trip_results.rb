@@ -11,13 +11,15 @@ class RoadTripResults
     create_road_trip
     if travel_time
       {
-        origin: @road_trip.origin,
-        destination: @road_trip.destination,
-        travel_time: @road_trip.travel_time,
-        travel_time_units: 'minutes',
-        arrival_temp: @road_trip.arrival_temp,
-        arrival_temp_units: 'F',
-        arrival_summary: @road_trip.arrival_summary
+        road_trip: {
+          origin: @road_trip.origin,
+          destination: @road_trip.destination,
+          travel_time: @road_trip.travel_time,
+          travel_time_units: 'minutes',
+          arrival_temp: @road_trip.arrival_temp,
+          arrival_temp_units: 'F',
+          arrival_summary: @road_trip.arrival_summary
+        }
       }
     end
   end

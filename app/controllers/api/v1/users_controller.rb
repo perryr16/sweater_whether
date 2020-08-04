@@ -1,13 +1,6 @@
 require 'securerandom'
 class Api::V1::UsersController < ApplicationController
 
-  # def create 
-  #   UserAuthenticator.new(params)
-  #   render json: {message: "Passwords Did Not Match"} if !user_authenticator.password_match
-  #   render json: {message: "Email Already Exists"} if !user.save
-  #   render json: UserSerializer.new(User.find(session[:user_id])), status: :created
-  # end
-
   def create
     user = User.create(new_user_params)
     if missing_params.present?

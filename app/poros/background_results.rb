@@ -4,16 +4,18 @@ class BackgroundResults
     keyword = format_keyword(location)
     results = image_service(keyword)
     {
-      background1_url: results[:results][0][:urls][:full],
-      background1_description: results[:results][0][:alt_description],
-      background2_url: results[:results][1][:urls][:full],
-      background2_description: results[:results][1][:alt_description],
-      background3_url: results[:results][2][:urls][:full],
-      background3_description: results[:results][2][:alt_description],
-      background4_url: results[:results][3][:urls][:full],
-      background4_description: results[:results][3][:alt_description],
-      background5_url: results[:results][4][:urls][:full],
-      background5_description: results[:results][4][:alt_description]
+      background_images: {
+        background1_url: results[:results][0][:urls][:full],
+        background1_description: results[:results][0][:alt_description],
+        background2_url: results[:results][1][:urls][:full],
+        background2_description: results[:results][1][:alt_description],
+        background3_url: results[:results][2][:urls][:full],
+        background3_description: results[:results][2][:alt_description],
+        background4_url: results[:results][3][:urls][:full],
+        background4_description: results[:results][3][:alt_description],
+        background5_url: results[:results][4][:urls][:full],
+        background5_description: results[:results][4][:alt_description]
+        }
     }
   end
   

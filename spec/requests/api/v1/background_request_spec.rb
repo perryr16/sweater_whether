@@ -8,7 +8,7 @@ describe "Background API" do
 
     expect(response.status).to eq(200)
 
-    body = JSON.parse(response.body, symbolize_names: true)
+    body = JSON.parse(response.body, symbolize_names: true)[:background_images]
 
     expect(body[:background1_url].include?('https://')).to be true
     expect(body[:background1_description].present?).to be true
@@ -42,7 +42,7 @@ describe "Background API" do
 
     expect(response.status).to eq(200)
 
-    body = JSON.parse(response.body, symbolize_names: true)
+    body = JSON.parse(response.body, symbolize_names: true)[:background_images]
 
     expect(body[:background1_url].include?('https://')).to be true
     expect(body[:background1_description].present?).to be true
@@ -66,7 +66,7 @@ describe "Background API" do
 
     expect(response.status).to eq(200)
 
-    body = JSON.parse(response.body, symbolize_names: true)
+    body = JSON.parse(response.body, symbolize_names: true)[:background_images]
 
     expect(body[:background1_url].include?('https://')).to be true
     expect(body[:background1_description].present?).to be true

@@ -34,6 +34,14 @@ describe "Background API" do
     body = JSON.parse(response.body, symbolize_names: true)
 
     expect(body[:message]).to eq("Enter a location. api/v1/destination?location=<city,state>")
+
+    get '/api/v1/backgrounds?location='
+
+     expect(response.status).to eq(400)
+
+    body = JSON.parse(response.body, symbolize_names: true)
+
+    expect(body[:message]).to eq("Enter a location. api/v1/destination?location=<city,state>")
   end
 
   it "user enters a destination that is not a state abbrev" do

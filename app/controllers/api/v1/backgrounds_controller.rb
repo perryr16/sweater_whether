@@ -1,7 +1,7 @@
 class Api::V1::BackgroundsController < ApplicationController 
 
   def index
-    if !params[:location]
+    if !params[:location] || params[:location].blank?
       render json: {message: "Enter a location. api/v1/destination?location=<city,state>"}, status: :bad_request
     else
       render json: BackgroundResults.new.format_response(params[:location])

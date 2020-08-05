@@ -82,10 +82,16 @@ describe "Register API" do
     body = JSON.parse(response.body, symbolize_names: true)
 
     expect(body[:message]).to eq("Email in Use")
+  end
 
+  it "user attempts to register without user_params" do 
+    post '/api/v1/users'
 
+    expect(response.status).to eq(400)
 
+    body = JSON.parse(response.body, symbolize_names: true)
 
+    expect(body[:message]).to eq("Please Enter a email, password, password_confirmation")
   end
 end
 

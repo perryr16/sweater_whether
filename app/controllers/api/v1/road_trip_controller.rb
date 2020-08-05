@@ -4,6 +4,8 @@ class Api::V1::RoadTripController < ApplicationController
     user = User.find_by(api_key: params[:api_key])
     if missing_params.present?
       render json: {message: "Please Enter a #{missing_params}"}, status: :bad_request
+    elsif no_params.present?
+      render json: {message: "Please Enter a #{no_params}"}, status: :bad_request
     elsif !user 
       render json: {message: "Invalid Credentials"}, status: :unauthorized
     elsif RoadTripResults.new(params).travel_time.nil?
@@ -23,6 +25,14 @@ class Api::V1::RoadTripController < ApplicationController
       end
     end
     missing_params.join(", ")
+  end
+
+  def no_params
+    message = []
+      message << 'origin' if !params[:origin]
+      message << 'destination' if !params[:destination]
+      message << 'api_key' if !params[:api_key]
+      message.join(', ')
   end
   
 end

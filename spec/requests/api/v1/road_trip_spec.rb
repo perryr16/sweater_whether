@@ -43,6 +43,15 @@ describe "Road Trip API" do
     expect(body[:message]).to eq('Invalid Credentials')
   end
 
+  it "user does not enter trip details" do
+    post '/api/v1/road_trip'
+
+    expect(response.status).to eq(400)
+
+    body = JSON.parse(response.body, symbolize_names: true)
+    expect(body[:message]).to eq("Please Enter a origin, destination, api_key")
+  end
+
   it "user enters invalid tip destination with good api" do
     trip_params = {
                   "origin": "Denver,CO",

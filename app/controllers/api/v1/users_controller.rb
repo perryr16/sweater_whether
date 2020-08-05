@@ -5,6 +5,8 @@ class Api::V1::UsersController < ApplicationController
     user = User.create(new_user_params)
     if missing_params.present?
       render json: {message: "Please Enter a #{missing_params}"}, status: :bad_request
+    elsif no_params.present?
+      render json: {message: "Please Enter a #{no_params}"}, status: :bad_request
     elsif password_mismatch?
       render json: {message: "Passwords Did Not Match"}, status: :bad_request
     elsif !user.save
@@ -37,6 +39,14 @@ class Api::V1::UsersController < ApplicationController
       end
     end
     missing_params.join(", ")
+  end
+
+  def no_params
+    message = []
+      message << 'email' if !params[:email]
+      message << 'password' if !params[:password]
+      message << 'password_confirmation' if !params[:password_confirmation]
+      message.join(', ')
   end
 
 end

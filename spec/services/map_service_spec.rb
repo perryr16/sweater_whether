@@ -12,8 +12,6 @@ describe "Map service" do
     lon = body[:results][0][:locations][0][:latLng][:lng]
     expect(lat.is_a?(Float)).to be true
     expect(lon.is_a?(Float)).to be true
-    # lat: 39.738453
-    # long: -104.984853
   end
   
 end

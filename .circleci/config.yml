@@ -13,13 +13,17 @@ workflows:
               only: sequential-branch-filter
 jobs:
   build:
-    working_directory: ~/sweater_weather
     docker:
+    working_directory: ~/sweater_weather
       - image: circleci/ruby:2.5.3
         environment:
           PGHOST: 127.0.0.1
           RAILS_ENV: test
+          PGUSER: root
       - image: circleci/postgres:9.5-alpine
+        environment: 
+          POSTGRES_USER: root
+          POSTGRES_DB: sweater_weather_test
     steps:
       - checkout
       - run: gem install bundler

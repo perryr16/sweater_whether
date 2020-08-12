@@ -13,8 +13,8 @@ workflows:
               only: sequential-branch-filter
 jobs:
   build:
-    docker:
     working_directory: ~/sweater_weather
+    docker:
       - image: circleci/ruby:2.5.3
         environment:
           PGHOST: 127.0.0.1

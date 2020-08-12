@@ -1,15 +1,23 @@
 version: 2.1
 orbs:
-  ruby: circleci/ruby@0.1.2 
-
+  heroku: circleci/heroku@1.2.0
+workflows:
+  heroku_deploy:
+    jobs:
+      - build
+      - heroku/deploy-via-git:
+          requires:
+            - build
+          filters:
+            branches:
+              only: sequential-branch-filter
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.6.3-stretch-node
-    executor: ruby/default
+      - image: circleci/ruby:2.5.3
+      - image: circleci/postgres:9.4.12-alpine
+    working_directory: ~/sweater_weather
     steps:
       - checkout
-      - run:
-          name: Which bundler?
-          command: gem install bundler:2.1.4
-          - bundle
+      - run: gem install bundler
+      - run: bundle install

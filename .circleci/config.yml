@@ -21,3 +21,8 @@ jobs:
       - checkout
       - run: gem install bundler
       - run: bundle install
+       # Database setup
+      - run: bundle exec rake db:create db:schema:load
+      # - run:
+      #     name: Run tests
+      #     command: rake

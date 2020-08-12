@@ -22,8 +22,8 @@ jobs:
       - run: gem install bundler
       - run: bundle install
       - run: 
-        name: Database Setup
-        command: |
+          name: Set up DB
+          command: |
             bundle exec rake db:create db:schema:load --trace
             bundle exec rake db:migrate
         
